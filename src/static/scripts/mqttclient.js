@@ -1,15 +1,9 @@
-extends layout.pug
-
-block content
-  script(src='https://code.jquery.com/jquery-3.3.1.min.js')
-  script(src='https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.1/mqttws31.min.js')
-  script.
     var port = 32051;
     var host = "m16.cloudmqtt.com";
     var clientId = "airstream";
     var username = "iqvgkhrw";
     var password = "8UdOeGeqex7x";
-    client = new Paho.MQTT.Client(host, port, clientId);
+    var client = new Paho.MQTT.Client(host, port, clientId);
 
     var topic = "out";
     // set callback handlers
@@ -61,11 +55,3 @@ block content
         message = '[' + date + ']: ' + message + '<br />';
         $('#msg').append(message);
     }
-
-  div(class="font-semibold font-title") This is our second tab
-  p Welcome to Microsoft Teams Hello World sample app (Node.js)
-
-  div
-    p#msg
-
-  
