@@ -16,10 +16,24 @@ module.exports.setup = function(app, webSocket) {
         extended: true
     }));
 
+    function homePage(req, res) {
+        console.log(req.params);
+        var userID = '';
+
+        if (req.params.userId !== undefined) {
+            userID = req.params.userId;
+        } else {
+            userID = 'edwuin.gutierrez@endava.com';
+        }
+
+        console.log(userID);
+
+        res.render('hello', {userMSTeams: userID});
+    }
+
     // Setup home page
-    app.get('/', function(req, res) {
-        res.render('hello');
-    });
+    app.get('/', homePage);
+    app.get('/user/:userId?', homePage);
 
     app.get('/second', function(req, res) {
         res.render('second');

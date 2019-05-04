@@ -8,13 +8,17 @@ block scripts
 
 block content
   div(class="font-semibold font-title") Air Stream
+  p=userMSTeams
+  input(type="hidden", name="userMSTeams" id="userMSTeams" value=userMSTeams)
   div
     div(style="float: left; width: 30%;")
-        canvas(data-type="radial-gauge"
+        canvas(
+            id="setPoint"
+            data-type="radial-gauge"
             data-width="300"
             data-height="400"
             data-units="°C"
-            data-title="Environment Temperature"
+            data-title="Set Point"
             data-min-value="-50"
             data-max-value="50"
             data-major-ticks="[-50,-40,-30,-20,-10,0,10,20,30,40,50]"
@@ -59,7 +63,9 @@ block content
             data-value="22.1"
         )
     div(style="float: left; width: 30%;")
-        canvas(data-type="linear-gauge"
+        canvas(
+            id="currentTemp"
+            data-type="linear-gauge"
             data-width="160"
             data-height="400"
             data-border-radius="20"
@@ -78,7 +84,7 @@ block content
             data-value-box-stroke="0"
             data-color-value-box-background="false"
             data-color-plate="transparent"
-            data-title="Temperature Air Conditioner"
+            data-title="Current Temperature"
             data-value-int="2"
             data-value-dec="1")
 
