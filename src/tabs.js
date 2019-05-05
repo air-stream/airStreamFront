@@ -5,6 +5,7 @@ module.exports.setup = function(app, webSocket) {
     var express = require('express')
     const request = require("request");
     const urlR = require('url');
+    const host = 'http://192.168.70.236:4000/api/v1/users/';
 
     // Configure the view engine, views folder and the statics path
     app.use(express.static(path.join(__dirname, 'static')));
@@ -19,16 +20,52 @@ module.exports.setup = function(app, webSocket) {
     function homePage(req, res) {
         console.log(req.params);
         var userID = '';
+        var userFloor = '';
+        var lastPollDate = '';
+        var nextPollDate = '';
 
         if (req.params.userId !== undefined) {
             userID = req.params.userId;
+
+            request.get(host + userID + '/floor', (error, response, body) => {
+                if (error) {
+                    console.log(error);
+                    // If there's no errors
+                } else if (response.statusCode === 200) {
+                    // console.log('---------  body -----------');
+                    // console.log(body);
+                    // console.log('--------- response -----------');
+                    // //console.log(response);
+                    // console.log('STATUS: ' + response.statusCode);
+
+                    var userData = JSON.parse(body);
+
+                    if (userData.devices) {
+                        userFloor = userData.devices[0].serial_number;
+                        console.log(userData.devices[0].serial_number);
+                    }
+
+                    if (userData.lastPollDate) {
+                        lastPollDate = userData.lastPollDate;
+                    }
+
+                    if (userData.nextPollDate) {
+                        nextPollDate = userData.nextPollDate;
+                    }
+                }
+            });
         } else {
             userID = 'edwuin.gutierrez@endava.com';
         }
 
         console.log(userID);
 
-        res.render('hello', { userMSTeams: userID });
+        res.render('hello', {
+            userMSTeams: userID,
+            userFloor: userFloor,
+            lastPollDate: lastPollDate,
+            nextPollDate: nextPollDate
+        });
     }
 
     // Setup home page
