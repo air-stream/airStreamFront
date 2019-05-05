@@ -28,7 +28,7 @@ module.exports.setup = function(app, webSocket) {
 
         console.log(userID);
 
-        res.render('hello', {userMSTeams: userID});
+        res.render('hello', { userMSTeams: userID });
     }
 
     // Setup home page
@@ -59,5 +59,20 @@ module.exports.setup = function(app, webSocket) {
         res.render('config', {
             config: body
         });
+    });
+
+    app.post('/sendPoll', function(req, res) {
+        console.log("body del req, ", req.body);
+        console.log("user, ", req.body.userMSTeams);
+
+        // Request.post({
+        //     "headers": { "content-type": "application/json" },
+        //     "url": host,
+        //     "body": JSON.stringify({ "username": req.body.userMSTeams })
+        // }, (error, response, body) => {
+        //     if (error) { return console.dir(error); }
+        //     console.dir(JSON.parse(body));
+        // });
+        res.json({ sended: 'ok' })
     });
 };
