@@ -27,6 +27,8 @@ $(document).ready(function() {
 
         $.post('/sendVote', data).done((data) => {
             console.log("Data send :: ", data);
+            $('#btnYes,#btnNo').attr('disabled', 'disabled');
+            $('#voteSended').html('Your vote has been sent')
         }).fail((err, err2) => {
             console.log('Error to send de poll :: ', err, err2);
         });

@@ -144,10 +144,14 @@ module.exports.setup = function(app, webSocket) {
             "url": host + req.body.userMSTeams + '/votes',
             "body": JSON.stringify({ "vote": req.body.vote })
         }, (error, response, body) => {
+            console.log("entre al req", response.statusCode);
+
             if (response.statusCode === 200) {
                 console.dir('exito en el poll::', JSON.parse(body));
             } else if (error) {
                 return console.dir('Error en el poll::', error);
+            } else {
+                console.log('body---', body);
             }
         });
         res.json({ sended: 'ok' });
