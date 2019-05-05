@@ -4,6 +4,7 @@ block scripts
   script(src='https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.1/mqttws31.min.js')
   script(src="/scripts/gauge.min.js")
   script(src="/scripts/mqttclient.js")
+  script(src="/scripts/loadPollConfig.js")
   script(src="/scripts/sendData.js")
 
 block content
@@ -92,7 +93,7 @@ block content
             data-title="Current Temperature"
             data-value-int="2"
             data-value-dec="1")
-    .col.m4.s12
+    #dvPoll.col.m4.s12.hide
         .row
           .col.s6
             #btnCold1.air-btn.blue.valign-wrapper.center-align.waves-effect.waves-light.btn-poll(data-vote="1")
@@ -107,7 +108,7 @@ block content
           .col.s6
             #btnHot2.air-btn.red.valign-wrapper.center-align.waves-effect.waves-light.btn-poll(data-vote="-2")
               h5 I'm very hot
-    .col.m4.s12
+    #dvPollVote.col.m4.s12.hide
       .row
         .col.s12.center
           h4 There is a poll at this moment

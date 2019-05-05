@@ -28,14 +28,14 @@ module.exports.setup = function(app, webSocket) {
         var proposedValue = '';
 
         if (req.params.userId !== undefined) {
-            userID =  req.params.userId;
+            userID = req.params.userId;
         }
 
-        request.get( host + userID + '/floor', (error, response, body) => {
-            console.log(response.statusCode);
+        request.get(host + userID + '/floor', (error, response, body) => {
+            console.log((response || {}).statusCode);
             if (error) {
                 console.log(error);
-            // If there's no errors
+                // If there's no errors
             } else if (response.statusCode === 200) {
                 // console.log('---------  body -----------');
                 // console.log(body);
@@ -69,7 +69,7 @@ module.exports.setup = function(app, webSocket) {
                 }
 
                 if (userData.name) {
-                    proposedValue = userData.proposed_value; 
+                    proposedValue = userData.proposed_value;
                 }
             }
 
