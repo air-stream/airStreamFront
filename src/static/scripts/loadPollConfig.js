@@ -12,8 +12,15 @@ $(document).ready(function() {
     let lastPollDateEnd = new Date(lastPollDateEndDate + ' ' + lastPollDateEndHourFormat);
     let nextPollDate = new Date(nextPollDateDate + ' ' + nextPollDateHourFormat);
 
+    lastPollDateStart.setHours(lastPollDateStart.getHours() - 5);
+    lastPollDateEnd.setHours(lastPollDateEnd.getHours() - 5);
+    nextPollDate.setHours(nextPollDate.getHours() - 5);
+
     if (today.getTime() > lastPollDateStart.getTime() && today.getTime() < lastPollDateEnd.getTime()) {
         $('#dvPollVote').removeClass('hide');
+        if (localStorage.getItem('userVote')) {
+            $('#dvPollVote button').attr('disabled', 'disabled');
+        }
     } else {
         $('#dvPoll').removeClass('hide');
         if (today.getTime() > lastPollDateStart.getTime() && today.getTime() < nextPollDate.getTime()) {

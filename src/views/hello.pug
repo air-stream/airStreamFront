@@ -9,7 +9,7 @@ block scripts
 
 block content
   div(class="font-semibold font-title") Air Stream
-  p=userMSTeams
+  p=userFloorDesc
   input(type="hidden", name="userMSTeams" id="userMSTeams" value=userMSTeams)
   input(type="hidden", name="userFloor" id="userFloor" value=userFloor)
   input(type="hidden", name="lastPollDateStart" id="lastPollDateStart" value=lastPollDateStart)
@@ -96,6 +96,9 @@ block content
     #dvPoll.col.m4.s12.hide
         .row
           .col.s6
+            span(id="nextPollDateFront")
+        .row
+          .col.s6
             button#btnCold1.air-btn.blue.valign-wrapper.center-align.waves-effect.waves-light.btn-poll(data-vote="1")
               h5 I feel cold
           .col.s6
@@ -112,8 +115,8 @@ block content
       .row
         .col.s12.center
           h4 There is a poll at this moment
-          h5 the proposed value is
-            i(id="proposedValue")
+          h5 the proposed value is 
+            i(id="proposedValue")=proposedValue
       .row
         .col.s6.center
           button#btnYes.btn-large.green.center-align.waves-effect.waves-light.btnPollVote Yes
@@ -122,4 +125,3 @@ block content
   div 
     p#msg
 
-  
