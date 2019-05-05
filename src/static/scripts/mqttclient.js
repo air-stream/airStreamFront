@@ -1,6 +1,6 @@
     var port = 32051;
     var host = "m16.cloudmqtt.com";
-    var clientId = "airstream" + Math.floor(Math.random());
+    var clientId = "airstream" + Math.random();
     var username = "iqvgkhrw";
     var password = "8UdOeGeqex7x";
     var client = new Paho.MQTT.Client(host, port, clientId);
@@ -54,20 +54,23 @@
         var date = d.toLocaleDateString() + '  ' + d.toLocaleTimeString();
         var frame = message.split(',');
         var currentTemp, setPoint = '';
+        var userMSTeams = $('#userMSTeams').val();
+        var userFloor = $('#userFloor').val();
 
         // If the frame is valid
         if (frame.length === 11) {
-            currentTemp = frame[7];
-            setPoint = frame[9];
-            $('#currentTemp').attr('data-value', currentTemp);
-            $('#setPoint').attr('data-value', setPoint);
+            // filtering just user floor frames
+            if (userFloor === frame[2]) {
+                currentTemp = frame[7];
+                setPoint = frame[9];
+                $('#currentTemp').attr('data-value', currentTemp);
+                $('#setPoint').attr('data-value', setPoint);
+                $('#msg').append(currentTemp);
+                $('#msg').append(setPoint);
+                $('#msg').append(userMSTeams);
+            }
         }
-
-        var userMSTeams = $('#userMSTeams').val();
 
         message = '[' + date + ']: ' + message + '<br />';
         $('#msg').append(message);
-        $('#msg').append(currentTemp);
-        $('#msg').append(setPoint);
-        $('#msg').append(userMSTeams);
     }
