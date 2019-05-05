@@ -5,6 +5,7 @@ module.exports.setup = function(app, webSocket) {
     var express = require('express')
     const request = require("request");
     const urlR = require('url');
+    //const host = 'http://192.168.70.236:4000/api/v1/users/';
     const host = 'https://staging.airstream.com.co/api/v1/users/';
     var selectedValue = '';
     const fs = require('fs');
@@ -73,7 +74,7 @@ module.exports.setup = function(app, webSocket) {
                     userFloorDesc = 'Welcome ' + userID + ". You're in " + userData.name;
                 }
 
-                if (userData.name) {
+                if (userData.proposed_value) {
                     proposedValue = userData.proposed_value;
                 }
             }

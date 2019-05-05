@@ -1,6 +1,7 @@
 $(document).ready(function() {
     $('.btn-poll').on('click', function() {
-        var vote = parseInt($('#proposedValue').val() || 0) + parseInt($(this).attr('data-vote'));
+        var defaultTemp = $('#currentTemp').attr('data-value');
+        var vote = parseInt($('#proposedValue').val() || defaultTemp) + parseInt($(this).attr('data-vote'));
         var data = { vote: vote, userMSTeams: $('#userMSTeams').val() };
 
         $.post('/sendPoll', data).done((data) => {
