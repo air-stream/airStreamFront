@@ -1,6 +1,6 @@
 $(document).ready(function() {
     $('.btn-poll').on('click', function() {
-        var data = { id: $(this).attr('data-vote'), userMSTeams: $('#userMSTeams').val() };
+        var data = { vote: $(this).attr('data-vote'), userMSTeams: $('#userMSTeams').val() };
 
         $.post('/sendPoll', data).done((data) => {
             console.log("Data send :: ", data);

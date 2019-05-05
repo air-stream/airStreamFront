@@ -88,22 +88,32 @@ block content
             data-value-int="2"
             data-value-dec="1")
     .col.m4.s12
-
         .row
           .col.s6
-            #cold1.air-btn.blue.valign-wrapper.center-align.waves-effect.waves-light.btn-poll(data-vote="1")
+            #btnCold1.air-btn.blue.valign-wrapper.center-align.waves-effect.waves-light.btn-poll(data-vote="1")
               h5 I feel cold
           .col.s6
-            #cold2.air-btn.blue.valign-wrapper.center-align.waves-effect.waves-light.btn-poll(data-vote="2")
+            #btnCold2.air-btn.blue.valign-wrapper.center-align.waves-effect.waves-light.btn-poll(data-vote="2")
               h5 I feel very cold
         .row
           .col.s6
-            #hot1.air-btn.red.valign-wrapper.center-align.waves-effect.waves-light.btn-poll(data-vote="-1")
+            #btnHot1.air-btn.red.valign-wrapper.center-align.waves-effect.waves-light.btn-poll(data-vote="-1")
               h5 I'm hot
           .col.s6
-            #hot2.air-btn.red.valign-wrapper.center-align.waves-effect.waves-light.btn-poll(data-vote="-2")
+            #btnHot2.air-btn.red.valign-wrapper.center-align.waves-effect.waves-light.btn-poll(data-vote="-2")
               h5 I'm very hot
-  div
+    .col.m4.s12
+      .row
+        .col.s12.center
+          h4 There is a poll at this moment
+          h5 the proposed value is
+            i(id="proposedValue")
+      .row
+        .col.s6.center
+          button#btnYes.btn-large.green.center-align.waves-effect.waves-light.btnPollVote Yes
+        .col.s6
+          button#btnNo.btn-large.grey.center-align.waves-effect.waves-light.btnPollVote no 
+  div 
     p#msg
 
   

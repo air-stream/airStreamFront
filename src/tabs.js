@@ -99,17 +99,15 @@ module.exports.setup = function(app, webSocket) {
     });
 
     app.post('/sendPoll', function(req, res) {
-        console.log("body del req, ", req.body);
         console.log("user, ", req.body.userMSTeams);
-
-        // Request.post({
-        //     "headers": { "content-type": "application/json" },
-        //     "url": host,
-        //     "body": JSON.stringify({ "username": req.body.userMSTeams })
-        // }, (error, response, body) => {
-        //     if (error) { return console.dir(error); }
-        //     console.dir(JSON.parse(body));
-        // });
-        res.json({ sended: 'ok' })
+        request.post({
+            "headers": { "content-type": "application/json" },
+            "url": host + req.body.userMSTeams + '/polls',
+            "body": JSON.stringify({ "proposed_value": req.body.vote })
+        }, (error, response, body) => {
+            if (error) { return console.dir('Error en el poll::', error); }
+            console.dir('exito en el poll::', JSON.parse(body));
+        });
+        res.json({ sended: 'ok' });
     });
 };
