@@ -18,6 +18,10 @@ div.panel {
     width: 98px;
 }
 
+.air-btn:disabled {
+    cursor: not-allowed;
+}
+
 div.waves-effect {
     display: flex;
 }

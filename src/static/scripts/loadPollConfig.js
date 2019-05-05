@@ -12,9 +12,13 @@ $(document).ready(function() {
     let lastPollDateEnd = new Date(lastPollDateEndDate + ' ' + lastPollDateEndHourFormat);
     let nextPollDate = new Date(nextPollDateDate + ' ' + nextPollDateHourFormat);
 
-    if (today.getTime() > lastPollDateStart.getTime()) {
-
+    if (today.getTime() > lastPollDateStart.getTime() && today.getTime() < lastPollDateEnd.getTime()) {
+        $('#dvPollVote').removeClass('hide');
+    } else {
+        $('#dvPoll').removeClass('hide');
+        if (today.getTime() > lastPollDateStart.getTime() && today.getTime() < nextPollDate.getTime()) {
+            $('#dvPoll button').attr('disabled', 'disabled');
+            $('#nextPollDateFront').text("Next vote at: " + nextPollDate);
+        }
     }
-
-
 });
