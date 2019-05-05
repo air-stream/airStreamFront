@@ -7,6 +7,9 @@ $(document).ready(function() {
             console.log("Data send :: ", data);
             $('#dvPoll button').attr('disabled', 'disabled');
             localStorage.setItem('userVote', $('#userMSTeams').val());
+            setTimeout(() => {
+                window.location.reload();
+            }, 500);
         }).fail((err, err2) => {
             console.log('Error to send de poll :: ', err, err2);
         });

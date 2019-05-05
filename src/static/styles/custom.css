@@ -25,3 +25,7 @@ div.panel {
 div.waves-effect {
     display: flex;
 }
+
+.font-med {
+    font-size: 23px;
+}

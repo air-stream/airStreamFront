@@ -5,7 +5,7 @@ module.exports.setup = function(app, webSocket) {
     var express = require('express')
     const request = require("request");
     const urlR = require('url');
-    const host = 'http://192.168.70.236:4000/api/v1/users/';
+    const host = 'https://staging.airstream.com.co/api/v1/users/';
 
     // Configure the view engine, views folder and the statics path
     app.use(express.static(path.join(__dirname, 'static')));
@@ -30,7 +30,7 @@ module.exports.setup = function(app, webSocket) {
 
         if (req.params.userId !== undefined) {
             userID = req.params.userId;
-            userID = userID.split('@')[0];
+            userID = userID.split('@')[0].toLowerCase();
         }
 
         request.get(host + userID + '/floor', (error, response, body) => {

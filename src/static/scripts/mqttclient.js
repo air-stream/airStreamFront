@@ -26,12 +26,15 @@
         // Keep alive the channel
         keepAlive('KA');
     }
-    function doFail(e){
+
+    function doFail(e) {
         console.log(e);
     }
+
     function keepAlive(message) {
-        setInterval(function(){ send(message); }, 9500);
+        setInterval(function() { send(message); }, 9500);
     }
+
     function send(_message) {
         var message = new Paho.MQTT.Message(_message);
         message.destinationName = topic;
@@ -49,6 +52,7 @@
         console.log("onMessageArrived:" + message.payloadString);
         write(message.payloadString);
     }
+
     function write(message) {
         var d = new Date();
         var date = d.toLocaleDateString() + '  ' + d.toLocaleTimeString();
@@ -65,12 +69,12 @@
                 setPoint = frame[9];
                 $('#currentTemp').attr('data-value', currentTemp);
                 $('#setPoint').attr('data-value', setPoint);
-                $('#msg').append(currentTemp);
-                $('#msg').append(setPoint);
-                $('#msg').append(userMSTeams);
+                // $('#msg').append(currentTemp);
+                // $('#msg').append(setPoint);
+                // $('#msg').append(userMSTeams);
             }
         }
 
         message = '[' + date + ']: ' + message + '<br />';
-        $('#msg').append(message);
+        // $('#msg').append(message);
     }
