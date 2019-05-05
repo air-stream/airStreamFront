@@ -114,4 +114,17 @@ module.exports.setup = function(app, webSocket) {
             config: body
         });
     });
+
+    app.post('/sendPoll', function(req, res) {
+        console.log("user, ", req.body.userMSTeams);
+        request.post({
+            "headers": { "content-type": "application/json" },
+            "url": host + req.body.userMSTeams + '/polls',
+            "body": JSON.stringify({ "proposed_value": req.body.vote })
+        }, (error, response, body) => {
+            if (error) { return console.dir('Error en el poll::', error); }
+            console.dir('exito en el poll::', JSON.parse(body));
+        });
+        res.json({ sended: 'ok' });
+    });
 };

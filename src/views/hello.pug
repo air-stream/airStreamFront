@@ -1,10 +1,10 @@
 extends layout.pug
 
 block scripts
-  script(src='https://code.jquery.com/jquery-3.3.1.min.js')
   script(src='https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.1/mqttws31.min.js')
   script(src="/scripts/gauge.min.js")
   script(src="/scripts/mqttclient.js")
+  script(src="/scripts/sendData.js")
 
 block content
   div(class="font-semibold font-title") Air Stream
@@ -15,13 +15,13 @@ block content
   input(type="hidden", name="lastPollDateEnd" id="lastPollDateEnd" value=lastPollDateEnd)
   input(type="hidden", name="nextPollDate" id="nextPollDate" value=nextPollDate)
   input(type="hidden", name="proposedValue" id="proposedValue" value=proposedValue)
-  div
-    div(style="float: left; width: 30%;")
+  .row
+    .col.m4.s12
         canvas(
             id="setPoint"
             data-type="radial-gauge"
-            data-width="300"
-            data-height="400"
+            data-width="200"
+            data-height="300"
             data-units="°C"
             data-title="Set Point"
             data-min-value="-50"
@@ -67,12 +67,12 @@ block content
             data-font-units="Led"
             data-value="22.1"
         )
-    div(style="float: left; width: 30%;")
+    .col.m4.s12
         canvas(
             id="currentTemp"
             data-type="linear-gauge"
-            data-width="160"
-            data-height="400"
+            data-width="110"
+            data-height="250"
             data-border-radius="20"
             data-borders="true"
             data-bar-begin-circle="25"
@@ -92,8 +92,33 @@ block content
             data-title="Current Temperature"
             data-value-int="2"
             data-value-dec="1")
-
-  div
+    .col.m4.s12
+        .row
+          .col.s6
+            #btnCold1.air-btn.blue.valign-wrapper.center-align.waves-effect.waves-light.btn-poll(data-vote="1")
+              h5 I feel cold
+          .col.s6
+            #btnCold2.air-btn.blue.valign-wrapper.center-align.waves-effect.waves-light.btn-poll(data-vote="2")
+              h5 I feel very cold
+        .row
+          .col.s6
+            #btnHot1.air-btn.red.valign-wrapper.center-align.waves-effect.waves-light.btn-poll(data-vote="-1")
+              h5 I'm hot
+          .col.s6
+            #btnHot2.air-btn.red.valign-wrapper.center-align.waves-effect.waves-light.btn-poll(data-vote="-2")
+              h5 I'm very hot
+    .col.m4.s12
+      .row
+        .col.s12.center
+          h4 There is a poll at this moment
+          h5 the proposed value is
+            i(id="proposedValue")
+      .row
+        .col.s6.center
+          button#btnYes.btn-large.green.center-align.waves-effect.waves-light.btnPollVote Yes
+        .col.s6
+          button#btnNo.btn-large.grey.center-align.waves-effect.waves-light.btnPollVote no 
+  div 
     p#msg
 
   

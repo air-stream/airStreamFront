@@ -1,8 +1,23 @@
-html, body, div.surface, div.panel {
+html,
+body,
+div.surface,
+div.panel {
     height: 100%;
     margin: 0;
 }
 
 div.panel {
     padding: 15px;
+}
+
+.air-btn {
+    border: solid 1px grey;
+    height: 110px;
+    cursor: pointer;
+    border-radius: 10%;
+    width: 98px;
+}
+
+div.waves-effect {
+    display: flex;
 }
