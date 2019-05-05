@@ -29,6 +29,7 @@ module.exports.setup = function(app, webSocket) {
 
         if (req.params.userId !== undefined) {
             userID = req.params.userId;
+            userID = userID.split('@')[0];
         }
 
         request.get(host + userID + '/floor', (error, response, body) => {
@@ -65,7 +66,7 @@ module.exports.setup = function(app, webSocket) {
                 }
 
                 if (userData.name) {
-                    userFloorDesc = userData.name;
+                    userFloorDesc = 'Welcome ' + userID + ". You're in " + userData.name;
                 }
 
                 if (userData.name) {
@@ -124,6 +125,21 @@ module.exports.setup = function(app, webSocket) {
         }, (error, response, body) => {
             if (error) { return console.dir('Error en el poll::', error); }
             console.dir('exito en el poll::', JSON.parse(body));
+        });
+        res.json({ sended: 'ok' });
+    });
+
+    app.post('/sendVote', function(req, res) {
+        console.log("user, ", req.body.userMSTeams);
+        request.post({
+            "headers": { "content-type": "application/json" },
+            "url": host + req.body.userMSTeams + '/votes',
+            "body": JSON.stringify({ "vote": req.body.vote })
+        }, (error, response, body) => {
+            if (error) {
+                return console.dir('Error sending the vote::', error);
+            }
+            console.dir('Success sending vote::', JSON.parse(body));
         });
         res.json({ sended: 'ok' });
     });
