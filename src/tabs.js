@@ -6,6 +6,9 @@ module.exports.setup = function(app, webSocket) {
     const request = require("request");
     const urlR = require('url');
     const host = 'https://staging.airstream.com.co/api/v1/users/';
+    var selectedValue = '';
+    const fs = require('fs');
+
 
     // Configure the view engine, views folder and the statics path
     app.use(express.static(path.join(__dirname, 'static')));
@@ -147,5 +150,39 @@ module.exports.setup = function(app, webSocket) {
             }
         });
         res.json({ sended: 'ok' });
+    });
+
+    app.get("/api/v1/notifyResult", function(req, res) {
+        console.log("body, ", req.body);
+        if (!req.body.proposed_value) {
+            return res.status(422).send({
+                success: 'false',
+                message: 'selected value is required'
+            });
+        } else {
+            selectedValue = req.body.proposed_value;
+
+            var fileContent = {
+                "selectedValue": selectedValue
+            };
+
+            fs.writeFile("notifications/lastNotifiedResult.json", JSON.stringify(fileContent, null, 2), function(err) {
+                if (err) {
+                    return console.log(err);
+                }
+
+                console.log("The file was saved!");
+            });
+        }
+
+        return res.status(200).send({
+            success: 'true',
+            message: 'Data checked'
+        });
+    });
+
+    // Setup the static tab
+    app.get('/validateValue', function(req, res) {
+        return selectedValue;
     });
 };
