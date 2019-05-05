@@ -18,6 +18,7 @@ module.exports.setup = function(app, webSocket) {
     }));
 
     function homePage(req, res) {
+        console.log('---------  Params -----------');
         console.log(req.params);
         var userID = 'admin';
         var userFloor = '';
@@ -33,7 +34,7 @@ module.exports.setup = function(app, webSocket) {
         }
 
         request.get(host + userID + '/floor', (error, response, body) => {
-            console.log((response || {}).statusCode);
+            console.log('Status: ' + (response || {}).statusCode);
             if (error) {
                 console.log(error);
                 // If there's no errors
@@ -123,8 +124,11 @@ module.exports.setup = function(app, webSocket) {
             "url": host + req.body.userMSTeams + '/polls',
             "body": JSON.stringify({ "proposed_value": req.body.vote })
         }, (error, response, body) => {
-            if (error) { return console.dir('Error en el poll::', error); }
-            console.dir('exito en el poll::', JSON.parse(body));
+            if (response.statusCode === 200) {
+                console.dir('exito en el poll::', JSON.parse(body));
+            } else if (error) {
+                return console.dir('Error en el poll::', error);
+            }
         });
         res.json({ sended: 'ok' });
     });
@@ -136,10 +140,11 @@ module.exports.setup = function(app, webSocket) {
             "url": host + req.body.userMSTeams + '/votes',
             "body": JSON.stringify({ "vote": req.body.vote })
         }, (error, response, body) => {
-            if (error) {
-                return console.dir('Error sending the vote::', error);
+            if (response.statusCode === 200) {
+                console.dir('exito en el poll::', JSON.parse(body));
+            } else if (error) {
+                return console.dir('Error en el poll::', error);
             }
-            console.dir('Success sending vote::', JSON.parse(body));
         });
         res.json({ sended: 'ok' });
     });
