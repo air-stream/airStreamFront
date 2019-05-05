@@ -19,52 +19,69 @@ module.exports.setup = function(app, webSocket) {
 
     function homePage(req, res) {
         console.log(req.params);
-        var userID = '';
+        var userID = 'admin';
         var userFloor = '';
-        var lastPollDate = '';
+        var userFloorDesc = '';
+        var lastPollDateStart = '';
+        var lastPollDateEnd = '';
         var nextPollDate = '';
+        var proposedValue = '';
 
         if (req.params.userId !== undefined) {
-            userID = req.params.userId;
-
-            request.get( host + userID + '/floor', (error, response, body) => {
-                if (error) {
-                    console.log(error);
-                // If there's no errors
-                } else if (response.statusCode === 200) {
-                    // console.log('---------  body -----------');
-                    // console.log(body);
-                    // console.log('--------- response -----------');
-                    // //console.log(response);
-                    // console.log('STATUS: ' + response.statusCode);
-
-                    var userData = JSON.parse(body);
-
-                    if (userData.devices) {
-                        userFloor = userData.devices[0].serial_number;
-                        console.log(userData.devices[0].serial_number);
-                    }
-
-                    if (userData.lastPollDate) {
-                        lastPollDate = userData.lastPollDate;
-                    }
-
-                    if (userData.nextPollDate) {
-                        nextPollDate = userData.nextPollDate;
-                    }
-                }
-            });
-        } else {
-            userID = 'edwuin.gutierrez@endava.com';
+            userID =  req.params.userId;
         }
 
-        console.log(userID);
+        request.get( host + userID + '/floor', (error, response, body) => {
+            console.log(response.statusCode);
+            if (error) {
+                console.log(error);
+            // If there's no errors
+            } else if (response.statusCode === 200) {
+                // console.log('---------  body -----------');
+                // console.log(body);
+                // console.log('--------- response -----------');
+                // //console.log(response);
+                // console.log('STATUS: ' + response.statusCode);
 
-        res.render('hello', {
-            userMSTeams: userID,
-            userFloor: userFloor,
-            lastPollDate: lastPollDate,
-            nextPollDate: nextPollDate
+                var userData = JSON.parse(body);
+                console.log('---------  userData -----------');
+                console.log(userData);
+
+                if (userData.devices) {
+                    userFloor = userData.devices[0].serial_number;
+                    console.log(' floor mac: ' + userFloor);
+                }
+
+                if (userData.when_start_last_poll) {
+                    lastPollDateStart = userData.when_start_last_poll;
+                }
+
+                if (userData.when_end_last_poll) {
+                    lastPollDateEnd = userData.when_end_last_poll;
+                }
+
+                if (userData.when_start_next_poll) {
+                    nextPollDate = userData.when_start_next_poll;
+                }
+
+                if (userData.name) {
+                    userFloorDesc = userData.name;
+                }
+
+                if (userData.name) {
+                    proposedValue = userData.proposed_value; 
+                }
+            }
+
+            res.render('hello', {
+                userFloor: userFloor,
+                userMSTeams: userID,
+                userFloorDesc: userFloorDesc,
+                lastPollDateStart: lastPollDateStart,
+                lastPollDateEnd: lastPollDateEnd,
+                nextPollDate: nextPollDate,
+                proposedValue: proposedValue
+            });
         });
     }
 
